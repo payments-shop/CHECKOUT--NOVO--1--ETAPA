@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupMasks();
     updateCartDisplay();
     initializeProgressiveFlow();
+    initializePaymentMethod();
 
     // Configurar teclado numérico para campos específicos
     const numericFields = ['cpf', 'zipCode', 'phone'];
@@ -101,14 +102,6 @@ function initializeProgressiveFlow() {
     if (sectionContinueButton) {
         sectionContinueButton.style.display = 'block';
     }
-
-    // Foca no campo de email
-    setTimeout(() => {
-        const emailField = document.getElementById('email');
-        if (emailField) {
-            emailField.focus();
-        }
-    }, 500);
 }
 
 function parseSubtotalFromURL() {
@@ -1426,6 +1419,27 @@ function updateInstallmentOptions(total) {
         optionEl.textContent = option.text;
         installmentsSelect.appendChild(optionEl);
     });
+}
+
+/**
+ * Inicializa o método de pagamento pré-selecionado (PIX)
+ * Garante que a classe .selected seja aplicada corretamente
+ * e que o estado JavaScript esteja sincronizado com o HTML
+ */
+function initializePaymentMethod() {
+    // Encontra o elemento PIX (que já tem a classe .selected no HTML)
+    const pixPaymentMethod = document.querySelector('.payment-method[data-payment="pix"]');
+    
+    if (pixPaymentMethod) {
+        // Encontra o header dentro do elemento PIX
+        const pixHeader = pixPaymentMethod.querySelector('.payment-header');
+        
+        if (pixHeader) {
+            // Simula um clique no header para disparar selectPayment()
+            // Isto garante que toda a lógica de seleção seja executada
+            pixHeader.click();
+        }
+    }
 }
 
 function selectPayment() {
